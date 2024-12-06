@@ -218,7 +218,17 @@ merged_df <- merge(list_of_dfs, sampled_speeches, by = "link")
 set.seed(123) 
 sampled_speeches <- merged_df[sample(nrow(merged_df), 10), ]
 
+#remove column 5 and 6
 sampled_speeches <- sampled_speeches[, -(5:6)]
 
+# Change column name of 'english_only_text' to 'text'
+colnames(sampled_speeches)[colnames(sampled_speeches) == "english_only_text"] <- "text"
+
+# Apply gsub() to each element in the data frame to remove all tabs
+sampled_speeches[] <- lapply(sampled_speeches, function(x) gsub("\t", "", x))
+
+
+
 # Save the sampled_speeches data frame as a TSV file
-write.table(sampled_speeches, "df_sampled_Speeches_CoE.tsv", sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(sampled_speeches, "sampled_Speeches_CoE.csv", row.names = FALSE)
+sampled_speeches_loaded <- read.csv("sampled_Speeches_CoE.csv", stringsAsFactors = FALSE)
