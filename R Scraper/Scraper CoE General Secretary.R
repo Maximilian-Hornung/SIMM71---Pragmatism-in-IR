@@ -1,5 +1,5 @@
 #merged dataset
-setwd("C:/Users/hornu/OneDrive/Master Social Scientific Data Analysis/Courses/SIMM71 - Computational Content Analysis for the Social Sciences/Pragmatism Exam")
+setwd("C:/Users/hornu/OneDrive/Master Social Scientific Data Analysis/Courses/SIMM71 - Computational Content Analysis for the Social Sciences/SIMM71---Pragmatism-in-IR/sampled speeches")
 
 ##Council of Europe 
 

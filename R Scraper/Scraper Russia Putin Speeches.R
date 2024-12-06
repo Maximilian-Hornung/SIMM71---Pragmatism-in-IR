@@ -1,6 +1,5 @@
 #merged dataset
-setwd("C:/Users/hornu/OneDrive/Master Social Scientific Data Analysis/Courses/SIMM71 - Computational Content Analysis for the Social Sciences/Pragmatism Exam")
-
+setwd("C:/Users/hornu/OneDrive/Master Social Scientific Data Analysis/Courses/SIMM71 - Computational Content Analysis for the Social Sciences/SIMM71---Pragmatism-in-IR/sampled speeches")
 #Putin speeches
 
 library(httr)
@@ -12,7 +11,7 @@ library(openxlsx)
 base_url <- "http://en.kremlin.ru/events/president/transcripts/speeches/page/"
 
 # Number of pages to scrape
-num_pages <- 13  # Adjust as needed
+num_pages <- 20  # Adjust as needed
 
 # Custom headers to mimic a browser
 custom_headers <- c(
@@ -111,6 +110,6 @@ for (i in seq_len(nrow(sampled_speeches))) {
   }, silent = TRUE)
 }
 
-# Optionally save the result to a CSV file
-write.csv(sampled_speeches, "sampled_speeches.csv", row.names = FALSE)
 
+# Save the sampled_speeches data frame as a TSV file
+write.table(sampled_speeches, "df_sampled_Speeches_Russia.tsv", sep = "\t", row.names = FALSE, quote = FALSE)
