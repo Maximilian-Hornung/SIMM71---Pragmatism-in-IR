@@ -216,15 +216,21 @@ merged_df <- merge(list_of_dfs, sampled_speeches, by = "link")
 
 #now sample for 10 speeches 
 set.seed(123) 
-sampled_speeches <- merged_df[sample(nrow(merged_df), 10), ]
+sampled_speeches <- merged_df[sample(nrow(merged_df), 5), ]
 
 #remove column 5, 6 and 7
 sampled_speeches <- sampled_speeches[, -(5:7)]
 
-# Change column name of 'english_only_text' to 'text'
-colnames(sampled_speeches)[colnames(sampled_speeches) == "english_only_text"] <- "text"
+# Change column name of 'english_only_text' to 'raw_text'
+colnames(sampled_speeches)[colnames(sampled_speeches) == "english_only_text"] <- "raw_text"
 
+# clean text by removing "as delivered"
 
+sampled_speeches$raw_text <- gsub(
+  "\\(?As delivered\\)?",  # Pattern to match "As delivered" with or without parentheses
+  "", 
+  sampled_speeches$raw_text
+)
 
 # Save the sampled_speeches data frame as a TSV file
 write.csv(sampled_speeches, "sampled_Speeches_CoE.csv", row.names = FALSE)

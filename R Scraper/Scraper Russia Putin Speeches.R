@@ -77,10 +77,10 @@ all_speeches <- do.call(rbind, list_of_dfs)
 
 # Randomly sample 10 speeches from the 'all_speeches' dataframe
 set.seed(123)  # Set a seed for reproducibility
-sampled_speeches <- all_speeches[sample(nrow(all_speeches), 10), ]
+sampled_speeches <- all_speeches[sample(nrow(all_speeches), 5), ]
 
 # Scrape the full text of speeches
-sampled_speeches$text <- NA
+sampled_speeches$raw_text <- NA
 
 for (i in seq_len(nrow(sampled_speeches))) {
   random_delay()  # Add delay to mimic human behavior
@@ -102,7 +102,7 @@ for (i in seq_len(nrow(sampled_speeches))) {
       # Clean up text (remove extra whitespace)
       full_text <- gsub("\\s+", " ", full_text)  # Replace multiple spaces with a single space
       
-      sampled_speeches$text[i] <- full_text
+      sampled_speeches$raw_text[i] <- full_text
       print(paste0("Scraped text from speech ", i))
     } else {
       warning(paste("Failed to fetch speech", i, "with status code:", status_code(response)))
@@ -110,6 +110,17 @@ for (i in seq_len(nrow(sampled_speeches))) {
   }, silent = TRUE)
 }
 
+## clean speeches
+sampled_speeches$raw_text <- gsub(
+  "All content on this site is licensed under Creative Commons Attribution 4.0 International ", 
+  "", 
+  sampled_speeches$raw_text 
+)
+
+
+
+
 
 # Save the sampled_speeches data frame as a TSV file
-write.table(sampled_speeches, "df_sampled_Speeches_Russia.tsv", sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(sampled_speeches, "sampled_Speeches_Russia.csv", row.names = FALSE)
+sampled_speeches_loaded <- read.csv("sampled_Speeches_Russia.csv", stringsAsFactors = FALSE)
