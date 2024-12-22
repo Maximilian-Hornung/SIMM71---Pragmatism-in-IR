@@ -110,13 +110,6 @@ for (i in seq_len(nrow(sampled_speeches))) {
   }, silent = TRUE)
 }
 
-## clean speeches
-sampled_speeches$raw_text <- gsub(
-  "All content on this site is licensed under Creative Commons Attribution 4.0 International ", 
-  "", 
-  sampled_speeches$raw_text 
-)
-
 
 
 
